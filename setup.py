@@ -13,4 +13,11 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
         "Operating System :: OS Independent"
     ],
+    install_requires=[
+        'numpy>=1.17',
+        'Flask>=1.1'
+    ],
+    url="https://github.com/asafsemo/hood_python-hoodlogger",
+    author="Asaf Semo",
+    author_email="asafsemo@gmail.com",
 )
