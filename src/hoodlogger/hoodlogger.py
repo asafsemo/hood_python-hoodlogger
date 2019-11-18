@@ -3,6 +3,7 @@ import os
 import datetime
 import copy
 import random
+import sys
 import numpy as np
 
 _levels = {
@@ -24,9 +25,11 @@ _levels = {
 class HoodLogger:
     def __init__(self, name: str, min_level: str = 'info', is_root: bool = True, trace_id: any = None, parent_id: any = None, current_id: any = None, *args, **kwargs):
         self._log_stream = print
+        # self._log_stream = sys.stdout.write
         self._min_level = min_level
         self._is_root = is_root
-        self._disable_trace_logging = False
+        self._disable_trace_logging = kwargs.get(
+            'disable_trace_logging', False)
         self._default_log = {
             "name": str(name),
             "pid": os.getpid(),
@@ -70,6 +73,7 @@ class HoodLogger:
         self._write_log(msg, _levels['info'], self._log_stream,
                         trace=trace, tags=tags,
                         *args, **kwargs)
+        sys.stdout.flush()
 
     def _write_log_with_level(self, msg, level, stream, trace: dict, tags: dict, *args, **kwargs):
         if (level < _levels[self._min_level]):

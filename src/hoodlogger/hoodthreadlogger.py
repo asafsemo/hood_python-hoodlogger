@@ -25,8 +25,8 @@ class HoodThreadLogger(HoodLogger):
             # this is root
             root_logger = HoodThreadLogger(
                 name=name,
-                trace_id=threadLocal.trace_id,
-                parent_id=threadLocal.parent_id)
+                trace_id=getattr(threadLocal, 'trace_id', None),
+                parent_id=getattr(threadLocal, 'parent_id', None), **kwargs)
 
             # threadLocal.loggers.insert(0, root_logger)
             return root_logger, True
@@ -42,7 +42,8 @@ class HoodThreadLogger(HoodLogger):
         child_level = min_level or self._min_level
         child_name = name or self._default_log['name'] + '-child'
         return HoodThreadLogger(name=child_name, min_level=child_level, is_root=False,
-                                trace_id=self._trace['id'], parent_id=self._trace['current'], **kwargs)
+                                trace_id=self._trace['id'], parent_id=self._trace['current'],
+                                **kwargs)
 
     def end(self, *args, **kwargs):
         super().end(*args, **kwargs)

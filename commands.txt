@@ -1,0 +1,9 @@
+pip install -e . 
+python setup.py bdist_wheel
+python setup.py sdist 
+python setup.py bdist_wheel sdist
+twine upload dist/*
+pytest -v --cov=src --cov-report=html
+pipenv install --dev
+pytest --cov=src/hoodlogger .
+pytest . --cov=src/hoodlogger --cov-report=html

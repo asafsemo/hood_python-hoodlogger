@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='hoodlogger',
-    version='0.0.1',
+    version='0.0.3',
     description='Hood Logger python package',
     package_dir={'': 'src'},
     packages=['hoodlogger'],

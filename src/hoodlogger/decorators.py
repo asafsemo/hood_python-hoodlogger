@@ -20,13 +20,13 @@ def flask_api_headers(func):
     return wrapper
 
 
-def hood_thread_logger(name: str = None, new_process_name: str = None, is_child: bool = True):
+def hood_thread_logger(name: str = None, new_process_name: str = None, is_child: bool = True, disable_trace_logging: bool = False):
     def decorator(func):
         """Print the function signature and return value"""
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             logger, is_end = HoodThreadLogger.get_logger(
-                name=(name or func.__name__), is_child=is_child, **kwargs)
+                name=(name or func.__name__), is_child=is_child, disable_trace_logging=disable_trace_logging, **kwargs)
 
             trace_obj = None
             if (new_process_name is not None):
