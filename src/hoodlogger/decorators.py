@@ -28,6 +28,9 @@ def hood_thread_logger(name: str = None, new_process_name: str = None, is_child:
             logger, is_end = HoodThreadLogger.get_logger(
                 name=(name or func.__name__), is_child=is_child, disable_trace_logging=disable_trace_logging, **kwargs)
 
+            if (logger is None):
+                return func(*args, **kwargs)
+
             trace_obj = None
             if (new_process_name is not None):
                 trace_obj = {'type': new_process_name}

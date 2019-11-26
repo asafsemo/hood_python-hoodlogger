@@ -6,6 +6,7 @@ threadLocal = threading.local()
 
 
 class HoodThreadLogger(HoodLogger):
+    _activate=True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,7 +19,14 @@ class HoodThreadLogger(HoodLogger):
         threadLocal.current_id = current_id
 
     @classmethod
-    def get_logger(cls, name=None, is_child=True, **kwargs):
+    def config(cls, activate = True, *args, **kwargs):
+        cls._activate = activate
+
+    @classmethod
+    def get_logger(cls, name=None, is_child=True, default_logger = None, **kwargs):
+        if (not cls._activate):
+            return default_logger, False
+
         loggers = getattr(threadLocal, 'loggers', None)
         if (loggers is None):
             threadLocal.loggers = []
